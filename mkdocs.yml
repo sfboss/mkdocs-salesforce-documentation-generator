@@ -1,0 +1,103 @@
+site_name: Salesforce Org Documentation
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mermaid2
+  - git-revision-date
+  - awesome-pages
+  - macros
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Data Model:
+    - Objects:
+      - Standard Objects: data-model/objects/standard-objects.md
+      - Custom Objects: data-model/objects/custom-objects.md
+    - Relationships:
+      - ERD: data-model/relationships/erd.md
+    - Fields:
+      - Data Dictionary: data-model/fields/data-dictionary.md
+      - Formula Fields: data-model/fields/formula-fields.md
+      - Field Dependencies: data-model/fields/field-dependencies.md
+  - Automation:
+    - Flows:
+      - Record-Triggered: automation/flows/record-triggered.md
+      - Scheduled: automation/flows/scheduled.md
+    - Process Builder: automation/processes/process-builder.md
+    - Triggers: automation/triggers/apex-triggers.md
+    - Validation Rules: automation/validation-rules/rules-matrix.md
+    - Workflows: automation/workflows/email-alerts.md
+  - Security:
+    - Profiles: security/profiles/profile-matrix.md
+    - Permissions: security/permissions/permission-sets.md
+    - Sharing:
+      - Sharing Rules: security/sharing/sharing-rules.md
+      - Role Hierarchy: security/sharing/role-hierarchy.md
+  - Integrations:
+    - APIs:
+      - REST Services: integrations/apis/rest-services.md
+      - SOAP Services: integrations/apis/soap-services.md
+    - Middleware: integrations/middleware/mulesoft.md
+    - External Services: integrations/external-services/named-credentials.md
+  - Customization:
+    - Layouts:
+      - Page Layouts: customization/layouts/page-layouts.md
+      - Record Types: customization/layouts/record-types.md
+    - Apps: customization/apps/lightning-apps.md
+    - Components: customization/components/lightning-components.md
+  - Administration:
+    - Users: administration/users/user-management.md
+    - Licenses: administration/licenses/license-usage.md
+    - Settings:
+      - Custom Settings: administration/settings/custom-settings.md
+      - Custom Metadata: administration/settings/custom-metadata.md
+  - Development:
+    - Apex: development/apex/code-coverage.md
+    - Testing: development/testing/test-classes.md
+    - Deployments: development/deployments/deployment-strategy.md
+  - Monitoring:
+    - Logs: monitoring/logs/debug-logs.md
+    - Metrics: monitoring/metrics/usage-metrics.md
+    - Reports: monitoring/reports/report-inventory.md
+
