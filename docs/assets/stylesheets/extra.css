@@ -1,0 +1,109 @@
+/* Doc type specific styling */
+[data-doc-type="user_guide"] h1 {
+  color: #4051b5;
+  border-bottom: 2px solid #4051b5;
+}
+
+[data-doc-type="admin_guide"] h1 {
+  color: #f50057;
+  border-bottom: 2px solid #f50057;
+}
+
+[data-doc-type="developer_guide"] h1 {
+  color: #00bfa5;
+  border-bottom: 2px solid #00bfa5;
+}
+
+[data-doc-type="reference"] h1 {
+  color: #ff9100;
+  border-bottom: 2px solid #ff9100;
+}
+
+/* Status badges */
+.doc-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.doc-status-published {
+  background-color: #00c853;
+  color: white;
+}
+
+.doc-status-draft {
+  background-color: #ffc400;
+  color: black;
+}
+
+.doc-status-deprecated {
+  background-color: #ff3d00;
+  color: white;
+}
+
+/* Audience banner */
+.audience-banner {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.audience-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.audience-tag-user {
+  background-color: #4051b5;
+  color: white;
+}
+
+.audience-tag-admin {
+  background-color: #f50057;
+  color: white;
+}
+
+.audience-tag-developer {
+  background-color: #00bfa5;
+  color: white;
+}
+
+/* Last reviewed date */
+.doc-last-reviewed {
+  margin-top: 3rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+  font-size: 0.8rem;
+  color: #757575;
+}
+
+/* Enhanced admonitions */
+.md-typeset .admonition,
+.md-typeset details {
+  border-width: 0;
+  border-left-width: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced code blocks */
+.md-typeset pre > code {
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced tables */
+.md-typeset table:not([class]) {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: #f5f5f5;
+  color: #424242;
+}

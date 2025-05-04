@@ -1,103 +1,184 @@
-site_name: Salesforce Org Documentation
+# Site Information
+site_name: Salesforce Documentation
+site_url: https://your-domain.com/docs
+site_description: Comprehensive Salesforce documentation for Users, Admins, and Developers
+site_author: Your Organization
+
+# Repository
+repo_url: https://github.com/your-org/salesforce-docs
+repo_name: your-org/salesforce-docs
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 Your Organization
+
+# Configuration
+docs_dir: docs
+site_dir: site
+
+# Theme Configuration
 theme:
   name: material
+  custom_dir: overrides
   features:
+    - navigation.instant
+    - navigation.tracking
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
+    - navigation.indexes
     - navigation.top
+    - toc.follow
+    - search.suggest
     - search.highlight
-    - search.share
+    - content.tabs.link
     - content.code.copy
+    - content.code.annotate
   palette:
     - scheme: default
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/toggle-switch
+        icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/brightness-4
         name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/images/favicon.png
+  logo: assets/images/logo.svg
+  icon:
+    logo: logo
+    repo: fontawesome/brands/github
+    admonition:
+      note: fontawesome/solid/note-sticky
+      abstract: fontawesome/solid/book
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/lightbulb
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: fontawesome/solid/bomb
+      danger: fontawesome/solid/skull
+      bug: fontawesome/solid/bug
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/quote-left
 
+# Plugins
 plugins:
   - search
+  - tags
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: date
+  - glightbox
   - mermaid2
-  - git-revision-date
-  - awesome-pages
-  - macros
+  - section-index
 
+# Markdown Extensions
 markdown_extensions:
+  # Python Markdown Extensions
+  - abbr
   - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 4
+
+  # PyMdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+      pygments_style: github-dark
+      linenums: true
+      auto_title: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: your-org
+      repo: salesforce-docs
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: ["docs/snippets"]
+      auto_append: ["abbreviations.md"]
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.arithmatex_fenced_format
+        - name: diagram
+          class: diagram
+          format: !!python/name:pymdownx.superfences.fence_div_format
+        - name: api-ref
+          class: api-reference
+          format: !!python/name:pymdownx.superfences.fence_div_format
   - pymdownx.tabbed:
       alternate_style: true
-  - tables
-  - toc:
-      permalink: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.blocks.admonition
+  - pymdownx.blocks.details
+  - pymdownx.blocks.tab:
+      alternate_style: true
 
-nav:
-  - Home: index.md
-  - Data Model:
-    - Objects:
-      - Standard Objects: data-model/objects/standard-objects.md
-      - Custom Objects: data-model/objects/custom-objects.md
-    - Relationships:
-      - ERD: data-model/relationships/erd.md
-    - Fields:
-      - Data Dictionary: data-model/fields/data-dictionary.md
-      - Formula Fields: data-model/fields/formula-fields.md
-      - Field Dependencies: data-model/fields/field-dependencies.md
-  - Automation:
-    - Flows:
-      - Record-Triggered: automation/flows/record-triggered.md
-      - Scheduled: automation/flows/scheduled.md
-    - Process Builder: automation/processes/process-builder.md
-    - Triggers: automation/triggers/apex-triggers.md
-    - Validation Rules: automation/validation-rules/rules-matrix.md
-    - Workflows: automation/workflows/email-alerts.md
-  - Security:
-    - Profiles: security/profiles/profile-matrix.md
-    - Permissions: security/permissions/permission-sets.md
-    - Sharing:
-      - Sharing Rules: security/sharing/sharing-rules.md
-      - Role Hierarchy: security/sharing/role-hierarchy.md
-  - Integrations:
-    - APIs:
-      - REST Services: integrations/apis/rest-services.md
-      - SOAP Services: integrations/apis/soap-services.md
-    - Middleware: integrations/middleware/mulesoft.md
-    - External Services: integrations/external-services/named-credentials.md
-  - Customization:
-    - Layouts:
-      - Page Layouts: customization/layouts/page-layouts.md
-      - Record Types: customization/layouts/record-types.md
-    - Apps: customization/apps/lightning-apps.md
-    - Components: customization/components/lightning-components.md
-  - Administration:
-    - Users: administration/users/user-management.md
-    - Licenses: administration/licenses/license-usage.md
-    - Settings:
-      - Custom Settings: administration/settings/custom-settings.md
-      - Custom Metadata: administration/settings/custom-metadata.md
-  - Development:
-    - Apex: development/apex/code-coverage.md
-    - Testing: development/testing/test-classes.md
-    - Deployments: development/deployments/deployment-strategy.md
-  - Monitoring:
-    - Logs: monitoring/logs/debug-logs.md
-    - Metrics: monitoring/metrics/usage-metrics.md
-    - Reports: monitoring/reports/report-inventory.md
+# Additional Configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-org
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/your-org
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+  status:
+    new: Recently added
+    updated: Recently updated
+    deprecated: Deprecated
+    experimental: Experimental
+  version:
+    provider: mike
 
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/extra.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.0.2/mermaid.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.0.2/mermaid.fallback.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.0.2/mermaid.init.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.0.2/mermaid.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.0.2/mermaid.fallback.min.js

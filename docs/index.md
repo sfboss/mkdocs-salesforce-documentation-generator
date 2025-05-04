@@ -1,50 +1,31 @@
-# Salesforce Org Documentation
+---
+title: Salesforce Documentation
+description: Comprehensive Salesforce documentation for Users, Admins, and Developers
+doc_type: index
+audience: [user, admin, developer]
+status: published
+last_reviewed: 2025-05-04
+icon: material/home
+tags:
+  - home
+  - index
+---
 
-Welcome to the comprehensive documentation for our Salesforce organization. This documentation provides detailed information about our implementation, customizations, and best practices.
+# Salesforce Documentation
 
-## Documentation Structure
+Welcome to the comprehensive Salesforce documentation. This site provides detailed information for users, administrators, and developers.
 
-### Data Model
-- Complete object model documentation
-- Field-level details and relationships
-- ERD diagrams and dependencies
+## Key Sections
 
-### Automation
-- Flow and Process Builder inventory
-- Validation rules and workflows
-- Trigger framework and implementation
+- [User Documentation](user/index.md): Guides for end users of the Salesforce platform
+- [Admin Documentation](admin/index.md): Information for Salesforce administrators
+- [Developer Documentation](developer/index.md): Resources for developers
+- [Analytics](analytics/index.md): Analytics and reporting information
+- [Governance](governance/index.md): Governance and compliance documentation
+- [Reference](reference/index.md): Reference materials and guides
 
-### Security
-- Profile and permission set matrix
-- Sharing model documentation
-- Security best practices
+## Recent Updates
 
-### Integrations
-- API documentation
-- Integration patterns
-- External system connections
-
-### Customization
-- Page layouts and record types
-- Lightning components
-- Custom applications
-
-### Administration
-- User management
-- License tracking
-- Org configuration
-
-### Development
-- Apex code documentation
-- Test coverage
-- Deployment procedures
-
-### Monitoring
-- System logs
-- Usage metrics
-- Reports and dashboards
-
-## Getting Started
-
-Use the navigation menu to explore different aspects of the organization. Each section contains detailed documentation, diagrams, and best practices.
-
+- Added Apex Trigger best practices
+- Updated User Management section
+- New Flow Builder tutorials

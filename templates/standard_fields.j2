@@ -1,0 +1,66 @@
+# Standard Salesforce Fields Data Dictionary
+
+**Generated on:** {{ generation_date }}
+
+This document provides a comprehensive data dictionary for standard fields across all standard Salesforce objects in our organization.
+
+{% if objects %}
+## Fields by Object
+
+{% for object in objects %}
+### {{ object.label }} ({{ object.api_name }})
+
+{% if object.fields %}
+| Field API Name | Label | Type | Required | Unique | External ID | Help Text | Description |
+|---------------|-------|------|----------|--------|-------------|-----------|-------------|
+{% for field in object.fields %}
+{% if not field.name.endswith('__c') %}
+| {{ field.name }} | {{ field.label }} | {{ field.type }} | {{ "Yes" if field.nillable == false else "No" }} | {{ "Yes" if field.unique else "No" }} | {{ "Yes" if field.externalId else "No" }} | {{ field.inlineHelpText }} | {{ field.description }} |
+{% endif %}
+{% endfor %}
+{% else %}
+No standard fields retrieved for this object.
+{% endif %}
+
+---
+{% endfor %}
+
+## Common Standard Fields
+
+These fields appear in multiple standard objects:
+
+| Field API Name | Description | Objects |
+|---------------|-------------|---------|
+| Id | Unique identifier for the record | All Objects |
+| Name | Primary name field | Most Objects |
+| CreatedDate | Date and time when the record was created | All Objects |
+| CreatedById | ID of the user who created the record | All Objects |
+| LastModifiedDate | Date and time when the record was last modified | All Objects |
+| LastModifiedById | ID of the user who last modified the record | All Objects |
+| SystemModstamp | Date and time when the record was last modified by a user or by an automated process | All Objects |
+| IsDeleted | Indicates whether the record has been moved to the Recycle Bin (true) or not (false) | All Objects |
+| OwnerId | ID of the assigned owner of the record | Most Objects |
+| LastActivityDate | Date of the last activity (task, event) logged on the record | Many Objects |
+
+## Field Type Reference
+
+| Field Type | Description | Example |
+|-----------|-------------|---------|
+| id | 18-character case-insensitive globally unique identifier | 001xx000003DGcOAAW |
+| reference | Reference to another object's ID field | Related to the Account object |
+| string | Text field that can contain any value | "Sample Text" |
+| boolean | True/False value | True or False |
+| datetime | Date and time | 2023-10-20T14:30:00.000Z |
+| date | Date only | 2023-10-20 |
+| double | Number with decimal places | In Account: 12345.67 |
+| currency | Currency amount | $1,000.00 |
+| int | Integer (whole number) | 42 |
+| email | Email address | user@example.com |
+| phone | Phone number | (123) 456-7890 |
+| url | Web address | https://example.com |
+| picklist | Single-select dropdown list | "Prospect" |
+| multipicklist | Multi-select list | "Feature A;Feature B" |
+
+{% else %}
+No metadata found for any objects.
+{% endif %}

@@ -1,0 +1,62 @@
+# Standard Salesforce Objects
+
+**Generated on:** {{ generation_date }}
+
+{% if objects %}
+This document provides comprehensive information about standard Salesforce objects in our organization.
+
+## Objects Summary
+
+| Object API Name | Label | Record Count | Last Modified |
+|----------------|-------|--------------|---------------|
+{% for object in objects %}
+| {{ object.api_name }} | {{ object.label }} | {{ object.record_count }} | {{ object.last_modified_date }} |
+{% endfor %}
+
+## Detailed Object Information
+
+{% for object in objects %}
+### {{ object.label }} ({{ object.api_name }})
+
+{{ object.description }}
+
+**Record Count:** {{ object.record_count }}  
+**Last Modified:** {{ object.last_modified_date }}
+
+#### Fields
+{% if object.fields %}
+
+| API Name | Label | Type | Required | Unique | External ID | Description |
+|----------|-------|------|----------|--------|-------------|-------------|
+{% for field in object.fields %}
+| {{ field.name }} | {{ field.label }} | {{ field.type }} | {{ "Yes" if field.nillable == false else "No" }} | {{ "Yes" if field.unique else "No" }} | {{ "Yes" if field.externalId else "No" }} | {{ field.description }} |
+{% endfor %}
+{% else %}
+No fields retrieved for this object.
+{% endif %}
+
+{% if object.validation_rules %}
+#### Validation Rules
+
+| Field | Error Message | Active |
+|-------|--------------|--------|
+{% for rule in object.validation_rules %}
+| {{ rule.name }} | {{ rule.message }} | {{ "Yes" if rule.active else "No" }} |
+{% endfor %}
+{% endif %}
+
+{% if object.relationships %}
+#### Relationships
+
+| Relationship Type | Related Object | Relationship Name |
+|-------------------|---------------|-------------------|
+{% for rel in object.relationships %}
+| {{ rel.type_symbol }} | {{ rel.related_object }} | {{ rel.relationship_name }} |
+{% endfor %}
+{% endif %}
+
+---
+{% endfor %}
+{% else %}
+No object metadata found.
+{% endif %}

@@ -1,0 +1,144 @@
+# Salesforce Object Relationships (ERD)
+
+**Generated on:** {{ generation_date }}
+
+This document provides a comprehensive view of the relationships between objects in our Salesforce organization, presented as an Entity Relationship Diagram (ERD).
+
+{% if objects %}
+## Overview
+
+This ERD shows how our {{ objects|length }} documented Salesforce objects relate to each other. The diagram can help you understand data flows, dependencies, and the overall structure of our Salesforce implementation.
+
+## Mermaid ERD Diagram
+
+```mermaid
+erDiagram
+    {% for object in objects %}
+    {{ object.api_name }} {
+        string Id "PK"
+        {% for field in object.fields %}
+        {% if field.type == "reference" %}
+        {{ field.type }} {{ field.name }} "FK"
+        {% elif field.unique == true %}
+        {{ field.type }} {{ field.name }} "UK"
+        {% elif field.name in ["Name", "CaseNumber", "Subject"] %}
+        {{ field.type }} {{ field.name }} "Primary Field"
+        {% endif %}
+        {% endfor %}
+    }
+    {% endfor %}
+    
+    {% for object in objects %}
+    {% for field in object.fields %}
+    {% if field.type == "reference" and field.referenceTo %}
+    {% for ref in field.referenceTo %}
+    {{ object.api_name }} ||--o{ {{ ref }} : "{{ field.relationshipName }}"
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+```
+
+## Relationship Matrix
+
+| Parent Object | Relationship | Child Object | Field Name |
+|---------------|-------------|--------------|------------|
+{% for object in objects %}
+{% for relationship in object.relationships %}
+| {{ object.api_name }} | {{ relationship.type_symbol }} | {{ relationship.related_object }} | {{ relationship.relationship_name }} |
+{% endfor %}
+{% endfor %}
+
+## Standard Salesforce Object Model
+
+Here's a reference diagram for the standard Salesforce object model showing core CRM relationships:
+
+```mermaid
+erDiagram
+    Account {
+        string Id "PK"
+        string Name "UK"
+    }
+    Contact {
+        string Id "PK"
+        string AccountId "FK"
+        string Name
+    }
+    Opportunity {
+        string Id "PK"
+        string AccountId "FK"
+        string Name
+        date CloseDate
+        string StageName
+    }
+    Case {
+        string Id "PK"
+        string ContactId "FK"
+        string AccountId "FK"
+        string CaseNumber "UK"
+        string Subject
+    }
+    Lead {
+        string Id "PK"
+        string Name
+        string Status
+    }
+    Campaign {
+        string Id "PK"
+        string Name
+        date StartDate
+        date EndDate
+    }
+    
+    Account ||--o{ Contact : has
+    Account ||--o{ Opportunity : has
+    Account ||--o{ Case : has
+    Contact ||--o{ Case : has
+    Lead ||--o{ Contact : "converts to"
+    Campaign ||--o{ Lead : has
+    Campaign ||--o{ Contact : has
+    Campaign ||--o{ Opportunity : influences
+```
+
+## Object-by-Object Relationship Details
+
+{% for object in objects %}
+### {{ object.label }} ({{ object.api_name }})
+
+#### Parent Objects
+{% set parent_count = 0 %}
+{% for field in object.fields %}
+{% if field.type == "reference" and field.referenceTo %}
+{% set parent_count = parent_count + 1 %}
+- **{{ field.label }}**: References {{ field.referenceTo|join(', ') }} through {{ field.name }}
+{% endif %}
+{% endfor %}
+{% if parent_count == 0 %}
+No parent objects identified.
+{% endif %}
+
+#### Child Objects
+{% set child_count = 0 %}
+{% for relationship in object.relationships %}
+{% set child_count = child_count + 1 %}
+- **{{ relationship.relationship_name }}**: {{ relationship.related_object }} relates to this object
+{% endfor %}
+{% if child_count == 0 %}
+No child objects identified.
+{% endif %}
+
+---
+{% endfor %}
+
+{% else %}
+No object relationship data found.
+{% endif %}
+
+/// note | Reading the ERD
+- **PK**: Primary Key
+- **FK**: Foreign Key
+- **UK**: Unique Key
+- **||--o{**: One-to-many relationship
+- **}|--||**: Many-to-one relationship
+- **}|--|{**: Many-to-many relationship
+///

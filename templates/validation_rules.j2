@@ -1,0 +1,92 @@
+# Validation Rules Matrix
+
+**Generated on:** {{ generation_date }}
+
+This document provides a comprehensive overview of all validation rules configured in our Salesforce organization.
+
+{% if objects %}
+## Summary
+
+| Object | Active Rules | Total Rules |
+|--------|-------------|-------------|
+{% for object in objects %}
+{% set active_count = object.validation_rules | selectattr("active", "equalto", true) | list | length %}
+{% set total_count = object.validation_rules | length %}
+{% if total_count > 0 %}
+| {{ object.label }} ({{ object.api_name }}) | {{ active_count }} | {{ total_count }} |
+{% endif %}
+{% endfor %}
+
+## Validation Rules by Object
+
+{% for object in objects %}
+{% if object.validation_rules %}
+### {{ object.label }} ({{ object.api_name }})
+
+| Rule Name | Error Display Field | Error Message | Active | Description |
+|-----------|---------------------|---------------|--------|-------------|
+{% for rule in object.validation_rules %}
+| {{ rule.name }} | {{ rule.name }} | {{ rule.message }} | {{ "✓" if rule.active else "✗" }} | {{ rule.description }} |
+{% endfor %}
+
+---
+{% endif %}
+{% endfor %}
+
+## Inactive Validation Rules
+
+The following validation rules are currently inactive:
+
+| Object | Rule Name | Error Message | Description |
+|--------|-----------|---------------|-------------|
+{% for object in objects %}
+{% for rule in object.validation_rules %}
+{% if not rule.active %}
+| {{ object.label }} | {{ rule.name }} | {{ rule.message }} | {{ rule.description }} |
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% else %}
+No validation rules found in the organization.
+{% endif %}
+
+## Best Practices for Validation Rules
+
+1. **Keep error messages clear and actionable** - Tell users exactly what they need to fix
+2. **Test validation rules thoroughly** - Ensure they work as expected across different user profiles
+3. **Document the business reason** - Use the description field to explain why the rule exists
+4. **Avoid overlapping rules** - Check for conflicts with other validation rules
+5. **Consider performance impact** - Complex validation formulas may impact system performance
+
+/// note | Validation Rule Formula Reference
+Here are some common formula patterns used in validation rules:
+
+**Check if field is empty:**
+```
+ISBLANK(Field__c)
+```
+
+**Check if a picklist has a specific value:**
+```
+ISPICKVAL(Status__c, "Closed")
+```
+
+**Check if date is in the past:**
+```
+CloseDate < TODAY()
+```
+
+**Check record ownership:**
+```
+$User.Id <> OwnerId
+```
+
+**Complex logical conditions:**
+```
+AND(
+    ISPICKVAL(StageName, "Closed Won"),
+    ISBLANK(CloseDate)
+)
+```
+///

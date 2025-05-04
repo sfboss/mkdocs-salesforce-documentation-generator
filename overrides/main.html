@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="md-content" data-md-component="content">
+    <article class="md-content__inner md-typeset" role="main" data-doc-type="{{ page.meta.doc_type }}">
+      
+      {# Include audience banner if specified #}
+      {% if page.meta.audience %}
+        <div class="audience-banner">
+          {% for audience_item in page.meta.audience %}
+            <span class="audience-tag audience-tag-{{ audience_item }}">{{ audience_item }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      {# Add status badge if specified #}
+      {% if page.meta.status %}
+        <div class="doc-status doc-status-{{ page.meta.status }}">
+          {{ config.extra.status[page.meta.status] }}
+        </div>
+      {% endif %}
+      
+      {# Include the actual content #}
+      {{ page.content }}
+      
+      {# Add last reviewed information if available #}
+      {% if page.meta.last_reviewed %}
+        <div class="doc-last-reviewed">
+          Last reviewed: {{ page.meta.last_reviewed }}
+        </div>
+      {% endif %}
+      
+      {# Add related content if available #}
+      {% if page.meta.related_links %}
+        <div class="related-content">
+          <h2>Related Content</h2>
+          <ul>
+            {% for link in page.meta.related_links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </article>
+  </div>
+{% endblock %}

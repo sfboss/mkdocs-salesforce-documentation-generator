@@ -1,0 +1,5 @@
+<div class="audience-banner">
+  {% for audience_item in page.meta.audience %}
+    <span class="audience-tag audience-tag-{{ audience_item }}">{{ audience_item }}</span>
+  {% endfor %}
+</div>

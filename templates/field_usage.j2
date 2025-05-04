@@ -1,0 +1,108 @@
+# Field Usage Analysis
+
+**Generated on:** {{ generation_date }}
+
+This document provides a comprehensive analysis of field usage across objects in our Salesforce organization. Understanding which fields are frequently used and which are rarely populated can help guide decisions about field cleanup, page layout optimization, and data quality improvements.
+
+{% if objects %}
+## Usage Summary
+
+This analysis measures the percentage of records that have a non-null value in each field. Fields with low usage percentages may be candidates for review.
+
+{% for object in objects %}
+### {{ object.label }} ({{ object.api_name }})
+
+**Total Records Analyzed:** {{ object.record_count }}
+
+{% if object.field_usage %}
+#### Field Usage Rates
+
+| Field API Name | Label | Data Type | Usage % | 
+|----------------|-------|-----------|---------|
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% set field = object.fields | selectattr("name", "equalto", field_name) | first %}
+| {{ field_name }} | {{ field.label if field else field_name }} | {{ field.type if field else "Unknown" }} | {{ "%.2f"|format(usage_percent) }}% |
+{% endfor %}
+
+#### Usage Distribution
+
+##### Highly Used Fields (90-100%)
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% if usage_percent >= 90 %}
+- {{ field_name }}: {{ "%.2f"|format(usage_percent) }}%
+{% endif %}
+{% endfor %}
+
+##### Moderately Used Fields (30-89%)
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% if usage_percent >= 30 and usage_percent < 90 %}
+- {{ field_name }}: {{ "%.2f"|format(usage_percent) }}%
+{% endif %}
+{% endfor %}
+
+##### Rarely Used Fields (0-29%)
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% if usage_percent < 30 %}
+- {{ field_name }}: {{ "%.2f"|format(usage_percent) }}%
+{% endif %}
+{% endfor %}
+
+#### Field Usage Visualization
+
+```
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% set field = object.fields | selectattr("name", "equalto", field_name) | first %}
+{{ (field.label if field else field_name)[:30].ljust(30) }} | {{ "█" * (usage_percent|int // 5) }}{{ " " }}{{ "%.2f"|format(usage_percent) }}%
+{% endfor %}
+```
+
+{% else %}
+No field usage statistics available for this object.
+{% endif %}
+
+---
+{% endfor %}
+
+## Recommendations
+
+### Fields to Review (Under 10% Usage)
+{% set low_usage_fields = [] %}
+{% for object in objects %}
+{% if object.field_usage %}
+{% for field_name, usage_percent in object.field_usage.items() %}
+{% if usage_percent < 10 %}
+{% set field = object.fields | selectattr("name", "equalto", field_name) | first %}
+{% set _ = low_usage_fields.append((object.api_name, field_name, field.label if field else field_name, usage_percent)) %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% if low_usage_fields %}
+| Object | Field API Name | Field Label | Usage % |
+|--------|---------------|-------------|---------|
+{% for obj, field_name, field_label, usage in low_usage_fields %}
+| {{ obj }} | {{ field_name }} | {{ field_label }} | {{ "%.2f"|format(usage) }}% |
+{% endfor %}
+{% else %}
+No fields with usage below 10% identified.
+{% endif %}
+
+### Best Practices for Field Optimization
+
+1. **Consider deprecating fields** with consistently low usage (under 5%) that aren't required for integrations or reporting
+2. **Review page layouts** to prioritize highly-used fields and group rarely-used fields in their own sections
+3. **Audit field-level security** to ensure appropriate access to important fields
+4. **Document business purpose** for fields with low usage that need to be retained
+5. **Consider making important fields required** if business rules dictate they should always be populated
+
+{% else %}
+No objects found for analysis.
+{% endif %}
+
+/// warning | Data Limitations
+This analysis:
+- Cannot analyze formula fields, lookups, or certain complex data types
+- Reports on the current state only; historical trends are not included
+- May include system-managed fields that users don't directly interact with
+///
