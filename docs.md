@@ -1,52 +1,3 @@
-# MkDocs Blog and Navigation Structure
-
-## Purpose
-
-This project leverages [MkDocs](https://www.mkdocs.org/) to generate comprehensive, easy-to-navigate documentation for Salesforce projects. The goal is to provide a clear, organized, and searchable resource for developers, admins, and stakeholders.
-
-## Blog Structure
-
-The blog feature in MkDocs (enabled via plugins like `mkdocs-blog-plugin`) allows y. ou to publish updates, release notes, tutorials, and best practices. Blog posts are typically stored in a `blog/` directory and are automatically listed in a chronological feed.
-
-**Example Blog Directory:**
-```
-docs/
-    blog/
-        2024-06-01-release-notes.md
-        2024-05-15-getting-started.md
-```
-
-## Navigation (`nav`) Structure
-
-The `nav` section in `mkdocs.yml` defines the sidebar and top navigation for your documentation. It organizes content into logical sections, making it easy for users to find information.
-
-**Example `mkdocs.yml` Navigation:**
-```yaml
-nav:
-    - Home: index.md
-    - Getting Started:
-            - Introduction: getting-started/introduction.md
-            - Installation: getting-started/installation.md
-    - Guides:
-            - Configuration: guides/configuration.md
-            - Usage: guides/usage.md
-    - Blog:
-            - "Release Notes": blog/2024-06-01-release-notes.md
-            - "Getting Started": blog/2024-05-15-getting-started.md
-    - API Reference: api-reference.md
-    - FAQ: faq.md
-```
-
-## Summary
-
-- **Blog:** Share updates, tutorials, and news.
-- **Nav:** Organize documentation for easy access.
-- **Purpose:** Deliver clear, structured Salesforce documentation using MkDocs..
-
-
-# Menu System
-
-```
 docs
 ├── admin
 │   ├── automation
@@ -300,4 +251,3 @@ docs
     └── standard_objects.md
 
 64 directories, 186 files
-```
